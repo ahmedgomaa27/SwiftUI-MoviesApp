@@ -12,6 +12,7 @@ protocol ApiTarget {
     var path: String { get }
     var method: HTTPMethod { get }
     var parameters: [String: String]? { get }
+    var keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy { get }
     
 }
 
@@ -21,6 +22,10 @@ extension ApiTarget {
     var headers: [String : String] {
         ["accept": "application/json",
          "Authorization": "Bearer \(Constants.defaultAccessToken)"]
+    }
+    
+    var keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy {
+         .convertFromSnakeCase
     }
 }
 

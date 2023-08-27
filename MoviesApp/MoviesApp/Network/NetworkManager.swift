@@ -9,11 +9,10 @@ import Foundation
 
 class NetworkManager {
     
-    static func call<T: Codable>(target: AppTarget,
-                                 keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase) async throws -> T {
+    static func call<T: Codable>(target: AppTarget) async throws -> T {
         
         guard let url = URL(string: target.path) else { throw Constants.Errors.invalidURL }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = target.method.rawValue
         request.allHTTPHeaderFields = target.headers
@@ -37,7 +36,7 @@ class NetworkManager {
                 throw Constants.Errors.invalidResponse(description: nil)
             }
             let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = keyDecodingStrategy
+            decoder.keyDecodingStrategy = target.keyDecodingStrategy
             return try decoder.decode(T.self, from: date)
         } catch {
             throw Constants.Errors.invalidResponse(description: error.localizedDescription)
