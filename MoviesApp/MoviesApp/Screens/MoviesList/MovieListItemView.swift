@@ -27,8 +27,11 @@ struct MovieListItemView: View {
                 Text(movie.title)
                     .font(.headline)
                 Text(movie.overview)
+                    .multilineTextAlignment(.leading)
                     .font(.caption)
+                Spacer()
             }
+            .padding(.top, Constants.padding8)
         }
         .background(Color.white)
         .cornerRadius(10)

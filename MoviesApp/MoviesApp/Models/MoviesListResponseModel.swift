@@ -17,7 +17,6 @@ struct MoviesListResponseModel: Codable {
 
 // MARK: - MovieDataModel
 struct MovieDataModel: Codable, Identifiable {
-    let adult: Bool
     let backdropPath: String
     let genreIds: [Int]
     let id: Int

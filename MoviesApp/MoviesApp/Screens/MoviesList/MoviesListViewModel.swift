@@ -22,7 +22,7 @@ class MoviesListViewModel: ObservableObject {
         self.repository = repository
     }
     
-    func loadMoreMovies() {
+    func loadMovies() {
         showLoader = true
         page+=1
         Task {
@@ -44,17 +44,17 @@ class MoviesListViewModel: ObservableObject {
         }
     }
     
-    func validateLoadMore(currentItem: MovieDataModel) {
+    func loadMore(currentItem: MovieDataModel) {
         //TODO: check behaviour on the device
         guard let currentIndex = moviesList.firstIndex(where: { $0.id == currentItem.id }),
               currentIndex == moviesList.index(moviesList.endIndex, offsetBy: -loadMoreOffset),
               page < totalPagesCount else {
             return
         }
-        loadMoreMovies()
+        loadMovies()
     }
     
-    func showErrorMessage(error: Constants.Errors) {
+    func showErrorMessage(error: AppErrors) {
         errorMessage = ErrorUtils.getErrorMessage(error: error)
         DispatchQueue.main.async {
             self.errorViewPresented = true

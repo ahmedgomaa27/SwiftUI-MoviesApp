@@ -9,7 +9,7 @@ import Foundation
 
 class ErrorUtils {
 
-    class func getErrorMessage(error: Constants.Errors) -> String {
+    class func getErrorMessage(error: AppErrors) -> String {
         switch error {
         case .invalidURL:
             return "Invalid URL"

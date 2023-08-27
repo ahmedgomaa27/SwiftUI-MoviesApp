@@ -10,7 +10,10 @@ import Foundation
 class DateUtils {
     static let baseDateFormatter = DateFormatter()
 
-    static func formatDate(dateText: String) -> String {
-        return (baseDateFormatter.date(from: dateText) ?? Date()).formatted(date: .long, time: .omitted)
+    static func formatDate(_ dateText: String) -> String? {
+        guard let text = baseDateFormatter.date(from: dateText) else {
+            return nil
+        }
+        return text.formatted(date: .long, time: .omitted)
     }
 }

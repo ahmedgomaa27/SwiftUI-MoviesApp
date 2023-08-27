@@ -26,7 +26,7 @@ struct MoviesListView: View {
                                 MovieListItemView(movie: item)
                                     .frame(width: geometry.size.width - cellMargins, height: cellHeight)
                                     .onAppear {
-                                        viewModel.validateLoadMore(currentItem: item)
+                                        viewModel.loadMore(currentItem: item)
                                     }
                             }
                             .tint(.black)
@@ -41,7 +41,7 @@ struct MoviesListView: View {
                 .modifier(TopMessageModifier(isPresented: $viewModel.errorViewPresented, text: viewModel.errorMessage))
                 .navigationTitle("iMovies")
                 .task {
-                    viewModel.loadMoreMovies()
+                    viewModel.loadMovies()
                 }
             }
         }

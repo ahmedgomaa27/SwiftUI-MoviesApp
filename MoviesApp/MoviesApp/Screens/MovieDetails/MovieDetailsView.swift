@@ -24,12 +24,12 @@ struct MovieDetailsView: View {
                 //TODO: check logic
                 if viewModel.details != nil {
                     VStack(alignment: .leading) {
-                        Text(viewModel.details?.title ?? "")
+                        Text(viewModel.title)
                             .font(.title)
                             .bold()
                         //TODO: check vm for title
                         TextWithTitleView(title: "Overview",
-                                          text: viewModel.details?.overview)
+                                          text: viewModel.overview)
                         
                         TextWithTitleView(title: "Release Date",
                                           text: viewModel.releaseDate)

@@ -9,13 +9,6 @@ import Foundation
 
 struct Constants {
     static let padding8: CGFloat = 8
-    //TODO: check name
-    static let defaultAccessToken: String = "YOUR_TOKEN"
-    
-    enum Errors: Error {
-        case invalidURL
-        case invalidResponse(description: String?)
-        case invalidRequest
-        case genericError
-    }
+    //for testing purpose, it should be removed from code and provided by API, then save it in keychain
+    static let defaultAccessToken: String = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDE2NjgxZDA0NGIzMDA1NGIzMjliZTEwY2I4Yzg2MSIsInN1YiI6IjU5ZDAyNGQ0OTI1MTQxMTQ1MjAwOTYyYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.b-564NQAsPaZaJroc4g-RykU0pcfacef2WGR_B59FVw"
 }

@@ -34,14 +34,26 @@ class MovieDetailsViewModel: ObservableObject {
         }
     }
     
-    func showErrorMessage(error: Constants.Errors) {
+    func showErrorMessage(error: AppErrors) {
         errorMessage = ErrorUtils.getErrorMessage(error: error)
         DispatchQueue.main.async {
             self.errorViewPresented = true
         }
     }
+}
+
+
+//MARK: - UI computed properties
+extension MovieDetailsViewModel {
     
-    //UI Utils
+    var title: String {
+        details?.title ?? emptyText
+    }
+    
+    var overview: String {
+        details?.overview ?? emptyText
+    }
+    
     var posterImagePath: String {
         APIConstants.imagesBaseURL + (details?.backdropPath ?? "")
     }
@@ -55,7 +67,7 @@ class MovieDetailsViewModel: ObservableObject {
     }
     
     var releaseDate: String {
-        DateUtils.formatDate(dateText: details?.releaseDate ?? "")
+        DateUtils.formatDate(details?.releaseDate ?? "") ?? emptyText
     }
     
     var revenue: String {
@@ -65,5 +77,4 @@ class MovieDetailsViewModel: ObservableObject {
     var generesText: String {
         details?.genres.map({$0.name}).joined(separator: ", ") ?? emptyText
     }
-    
 }

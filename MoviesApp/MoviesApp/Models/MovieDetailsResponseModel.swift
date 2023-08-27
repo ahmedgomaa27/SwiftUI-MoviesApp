@@ -20,7 +20,6 @@ struct MoviesDetailsResponseModel: Codable {
     let posterPath: String
     let releaseDate: String
     let revenue, runtime: Int
-    let spokenLanguages: [SpokenLanguage]
     let status, tagline, title: String
     let video: Bool
     let voteAverage: Double
@@ -33,9 +32,3 @@ struct Genre: Codable {
     let id: Int
     let name: String
 }
-
-// MARK: - SpokenLanguage
-struct SpokenLanguage: Codable {
-    let englishName, iso6391, name: String
-}
-

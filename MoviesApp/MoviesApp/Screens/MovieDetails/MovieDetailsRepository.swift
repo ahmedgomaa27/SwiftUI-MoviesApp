@@ -8,18 +8,20 @@
 import Foundation
 
 protocol MovieDetailsRepositoryProtocol {
-    func getMovie(id: Int) async -> Result<MoviesDetailsResponseModel, Constants.Errors>
+    func getMovie(id: Int) async -> Result<MoviesDetailsResponseModel, AppErrors>
 }
 
 class MovieDetailsRepository: MovieDetailsRepositoryProtocol {
 
-    func getMovie(id: Int) async -> Result<MoviesDetailsResponseModel, Constants.Errors> {
+    func getMovie(id: Int) async -> Result<MoviesDetailsResponseModel, AppErrors> {
         do {
-            let response: MoviesDetailsResponseModel = try await NetworkManager.call(target: .movieDetails(id: id))
+            let response: MoviesDetailsResponseModel = try await NetworkManager.call(target: AppTarget.movieDetails(id: id))
             return .success(response)
         } catch {
             //TODO: validate logic
-            guard let appError = error as? Constants.Errors else { return .failure(Constants.Errors.genericError) }
+            guard let appError = error as? AppErrors else {
+                return .failure(AppErrors.genericError)
+            }
             return .failure(appError)
         }
         
