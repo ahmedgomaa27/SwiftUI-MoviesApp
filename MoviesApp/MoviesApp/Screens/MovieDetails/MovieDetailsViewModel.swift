@@ -12,8 +12,9 @@ class MovieDetailsViewModel: ObservableObject {
     private let repository: MovieDetailsRepositoryProtocol
     private let movieId: Int
     private let emptyText: String = "---"
-    @Published var details: MoviesDetailsResponseModel?
+    private var details: MoviesDetailsResponseModel?
     @Published var errorViewPresented: Bool = false
+    @Published var loadDataDone: Bool = false
     var errorMessage: String = ""
     
     init(id: Int, repository: MovieDetailsRepositoryProtocol = MovieDetailsRepository()) {
@@ -28,6 +29,7 @@ class MovieDetailsViewModel: ObservableObject {
         case .success(let response):
             await MainActor.run {
                 self.details = response
+                self.loadDataDone = true
             }
         case .failure(let failure):
            await showErrorMessage(error: failure)

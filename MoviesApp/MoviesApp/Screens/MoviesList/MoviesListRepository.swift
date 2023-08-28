@@ -19,7 +19,6 @@ class MoviesListRepository: MoviesListRepositoryProtocol {
             let response: MoviesListResponseModel = try await NetworkManager.call(target: AppTarget.moviesList(parameters: parameters))
             return .success(response)
         } catch {
-            //TODO: validate logic
             guard let appError = error as? AppErrors else {
                 return .failure(AppErrors.genericError)
             }

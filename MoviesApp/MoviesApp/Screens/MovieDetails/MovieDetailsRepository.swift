@@ -18,7 +18,6 @@ class MovieDetailsRepository: MovieDetailsRepositoryProtocol {
             let response: MoviesDetailsResponseModel = try await NetworkManager.call(target: AppTarget.movieDetails(id: id))
             return .success(response)
         } catch {
-            //TODO: validate logic
             guard let appError = error as? AppErrors else {
                 return .failure(AppErrors.genericError)
             }
