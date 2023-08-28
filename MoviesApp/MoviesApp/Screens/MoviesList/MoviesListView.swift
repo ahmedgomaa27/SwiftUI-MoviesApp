@@ -19,7 +19,6 @@ struct MoviesListView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(viewModel.moviesList) { item in
-                            //TODO: check if we need to change the data model
                             NavigationLink {
                                 MovieDetailsView(viewModel: MovieDetailsViewModel(id: item.id))
                             } label: {

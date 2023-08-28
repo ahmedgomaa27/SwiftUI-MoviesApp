@@ -17,7 +17,6 @@ protocol ApiTarget {
 }
 
 extension ApiTarget {
-    //TODO: remove token from hard coded string
     //header will default in all network cases
     var headers: [String : String] {
         ["accept": "application/json",

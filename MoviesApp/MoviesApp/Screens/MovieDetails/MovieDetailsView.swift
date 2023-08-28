@@ -21,13 +21,11 @@ struct MovieDetailsView: View {
                     })
                     .resizable()
                     .scaledToFit()
-                //TODO: check logic
-                if viewModel.details != nil {
+                if viewModel.loadDataDone {
                     VStack(alignment: .leading) {
                         Text(viewModel.title)
                             .font(.title)
                             .bold()
-                        //TODO: check vm for title
                         TextWithTitleView(title: "Overview",
                                           text: viewModel.overview)
                         
@@ -60,7 +58,6 @@ struct MovieDetailsView: View {
 
 struct MovieDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        //TODO: change the id
-        MovieDetailsView(viewModel: MovieDetailsViewModel(id: 976573))
+        MovieDetailsView(viewModel: MovieDetailsViewModel(id: Constants.sampleMovieId))
     }
 }
