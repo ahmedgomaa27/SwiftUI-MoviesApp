@@ -11,6 +11,7 @@ class DateUtils {
     static let baseDateFormatter = DateFormatter()
 
     static func formatDate(_ dateText: String) -> String? {
+        baseDateFormatter.dateFormat = "yyyy-mm-dd"
         guard let text = baseDateFormatter.date(from: dateText) else {
             return nil
         }
