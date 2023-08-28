@@ -25,11 +25,12 @@ final class MovieListTests: XCTestCase {
         XCTAssertTrue(viewModel.moviesList.count > 0)
     }
     
+    //we need to make sure movies are loaded and validate load more logic with each item
     func testLoadMore() async {
         await viewModel.loadMovies()
         let initialPage = viewModel.page
         for item in viewModel.moviesList {
-            await self.viewModel.loadMore(currentItem: item)
+            await viewModel.loadMore(currentItem: item)
         }
         XCTAssertTrue(viewModel.page > initialPage)
     }
