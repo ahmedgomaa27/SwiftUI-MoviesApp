@@ -26,17 +26,17 @@ class MovieDetailsViewModel: ObservableObject {
         let result = await repository.getMovie(id: movieId)
         switch result {
         case .success(let response):
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.details = response
             }
         case .failure(let failure):
-            showErrorMessage(error: failure)
+           await showErrorMessage(error: failure)
         }
     }
     
-    func showErrorMessage(error: AppErrors) {
+    func showErrorMessage(error: AppErrors) async {
         errorMessage = ErrorUtils.getErrorMessage(error: error)
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.errorViewPresented = true
         }
     }

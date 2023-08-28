@@ -14,7 +14,7 @@ class MoviesListViewModel: ObservableObject {
     @Published var showLoader: Bool = false
     @Published var errorViewPresented: Bool = false
     var errorMessage: String = ""
-    private var page: Int = 0
+    private(set) var page: Int = 0
     private var totalPagesCount: Int = 0
     private let loadMoreOffset: Int = 4
     
@@ -22,41 +22,39 @@ class MoviesListViewModel: ObservableObject {
         self.repository = repository
     }
     
-    func loadMovies() {
-        showLoader = true
+    func loadMovies() async {
+        await MainActor.run {
+            showLoader = true
+        }
         page+=1
-        Task {
-            let result = await repository.getAnimationMovies(page: page)
-            switch result {
-            case .success(let model):
-                totalPagesCount = model.totalPages
-                DispatchQueue.main.async {
-                    self.moviesList.append(contentsOf: model.results)
-                }
-            case .failure(let failure):
-                page-=1
-                showErrorMessage(error: failure)
+        let result = await repository.getAnimationMovies(page: page)
+        switch result {
+        case .success(let model):
+            totalPagesCount = model.totalPages
+            await MainActor.run {
+                self.moviesList.append(contentsOf: model.results)
             }
-            //TODO: check this handling
-            DispatchQueue.main.async {
-                self.showLoader = false
-            }
+        case .failure(let failure):
+            page-=1
+            await showErrorMessage(error: failure)
+        }
+        await MainActor.run {
+            self.showLoader = false
         }
     }
     
-    func loadMore(currentItem: MovieDataModel) {
-        //TODO: check behaviour on the device
+    func loadMore(currentItem: MovieDataModel) async {
         guard let currentIndex = moviesList.firstIndex(where: { $0.id == currentItem.id }),
               currentIndex == moviesList.index(moviesList.endIndex, offsetBy: -loadMoreOffset),
               page < totalPagesCount else {
             return
         }
-        loadMovies()
+        await loadMovies()
     }
     
-    func showErrorMessage(error: AppErrors) {
+    func showErrorMessage(error: AppErrors) async {
         errorMessage = ErrorUtils.getErrorMessage(error: error)
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.errorViewPresented = true
         }
     }
